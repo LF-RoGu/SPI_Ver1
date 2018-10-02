@@ -8,7 +8,26 @@
 #include "SPI.h"
 
 /*it enable the clock module of the SPI by modifying the MDIS bits*/
-static void SPI_enable(spi_channel_t);
+static void SPI_enable(spi_channel_t channel)
+{
+	switch (channel)
+	{
+	case SPI_0:
+		/*Buscar la mascara que habilite el MCR del SPI en el modulo MK64F12*/
+		SPI0->MCR &= ~(SPI_MCR_MDIS_MASK);
+		break;
+	case SPI_1:
+		/*Buscar la mascara que habilite el MCR del SPI en el modulo MK64F12*/
+		SPI1->MCR &= ~(SPI_MCR_MDIS_MASK);
+		break;
+	case SPI_2:
+		/*Buscar la mascara que habilite el MCR del SPI en el modulo MK64F12*/
+		SPI2->MCR &= ~(SPI_MCR_MDIS_MASK);
+		break;
+	default:
+		break;
+	}
+}
 /*It activate the clock gating*/
 static void SPI_clk(spi_channel_t);
 /*It configure the SPI as a master or slave depending on the value of masterOrslave*/
