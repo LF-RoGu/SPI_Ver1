@@ -127,11 +127,41 @@ static void SPI_baud_rate(spi_channel_t channel, uint32_t baudRate);
 /*It selects if MSB or LSM bits is first transmitted*/
 static void SPI_msb_first(spi_channel_t channel, spi_lsb_or_msb_t msb);
 /*It stars the SPI transmission by modifying the value of HALT bit*/
-void SPI_start_tranference(spi_channel_t channel);
+void SPI_start_tranference(spi_channel_t channel)
+{
+	switch(channel)
+	{
+	case SPI_0:
+		SPI0->MCR &= ~(SPI_MCR_HALT_MASK);
+		break;
+	case SPI_1:
+		SPI1->MCR &= ~(SPI_MCR_HALT_MASK);
+		break;
+	case SPI_2:
+		SPI2->MCR &= ~(SPI_MCR_HALT_MASK);
+		break;
+	}
+}
 /*It stops the SPI transmission by modifying the value of HALT bit*/
-void SPI_stop_tranference(spi_channel_t channel);
+void SPI_stop_tranference(spi_channel_t channel)
+{
+	switch (channel) {
+	case SPI_0:
+		SPI0->MCR |= (SPI_MCR_HALT_MASK);
+		break;
+	case SPI_1:
+		SPI1->MCR |= (SPI_MCR_HALT_MASK);
+		break;
+	case SPI_2:
+		SPI2->MCR |= (SPI_MCR_HALT_MASK);
+		break;
+	}
+}
 /*It transmits the information contained in data*/
 void SPI_send_one_byte(uint8_t Data);
 /*It configures the SPI for transmission, this function as arguments receives a pointer to a constant structure where are all
  * the configuration parameters*/
-void SPI_init(const spi_config_t*);
+void SPI_init(const spi_config_t* SPI_Config)
+{
+	SPI_clk(SPI_Config->spi_channel);
+}
