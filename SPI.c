@@ -120,10 +120,36 @@ static void SPI_fifo(spi_channel_t channel, spi_enable_fifo_t enableOrDisable)
 static void SPI_clock_polarity(spi_channel_t channel, spi_polarity_t cpol);
 /*It selects the frame size depending on the value of frameSize and the macros that are defined above*/
 static void SPI_frame_size(spi_channel_t channel, uint32_t frameSize);
+{
+	switch(channel) {
+		case SPI_0:
+		SPI0->CTAR[0] &= ~(SPI_CTAR_FMSZ_MASK);
+		SPI0->CTAR[0] |= frameSize;
+		break;
+}
 /*It selects the clock phase depending on the value of cpha*/
-static void SPI_clock_phase(spi_channel_t channel, spi_phase_t cpha);
+static void SPI_clock_phase(spi_channel_t channel, spi_phase_t cpha)
+{
+	switch (channel) {
+	case SPI_0:
+		if (0 == cpha) {
+			SPI0->CTAR[0] &= ~(SPI_CTAR_CPHA_MASK);
+		} else {
+			SPI0->CTAR[0] |= (SPI_CTAR_CPHA_MASK);
+		}
+		break;
+}
 /*It selects the baud rate depending on the value of baudRate and the macros that are defined above*/
-static void SPI_baud_rate(spi_channel_t channel, uint32_t baudRate);
+static void SPI_baud_rate(spi_channel_t channel, uint32_t baudRate)
+{
+	switch(channel)
+	{
+	case SPI_0:
+		SPI0->CTAR[0] &= ~(SPI_CTAR_BR_MASK);
+		SPI0->CTAR[0] |= baudRate;
+		break;
+	}
+}
 /*It selects if MSB or LSM bits is first transmitted*/
 static void SPI_msb_first(spi_channel_t channel, spi_lsb_or_msb_t msb);
 /*It stars the SPI transmission by modifying the value of HALT bit*/
