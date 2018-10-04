@@ -17,7 +17,7 @@
  
 #include "SPI.h"
 #include "GPIO.h"
-#include "Bits.h"
+#include "DataTypeDefinitions.h"
 #include "LCD_nokia.h"
 #include "LCD_nokia_images.h"
 #include "stdint.h"
@@ -36,20 +36,22 @@ const spi_config_t g_spi_config = {
 							GPIO_MUX2,
 							SPI_BAUD_RATE_2,
 							SPI_FSIZE_8,
-							{GPIO_D, bit_1, bit_2} };
+							{GPIO_D, BIT1, BIT2} };
 
 /*! This array hold the initial picture that is shown in the LCD. Note that extern should be avoided*/
 extern const uint8_t ITESO[504];
+extern const uint8_t teolosico[504];
 
 
 int main(void)
 {
 	uint8_t string1[]="ITESO"; /*! String to be printed in the LCD*/
+	uint8_t stringPeje[]="teolosico";/*String to be printed in the LCD*/
 	uint8_t string2[]="uMs y DSPs"; /*! String to be printed in the LCD*/
 	SPI_init(&g_spi_config); /*! Configuration function for the LCD port*/
 	LCD_nokia_init(); /*! Configuration function for the LCD */
 
-		for(;;) {	  
+		for(;;) {
 			LCD_nokia_clear();/*! It clears the information printed in the LCD*/
 			LCD_nokia_bitmap(&ITESO[0]); /*! It prints an array that hold an image, in this case is the initial picture*/
 			delay(65000);
@@ -68,7 +70,10 @@ int main(void)
 			LCD_nokia_send_char('1'); /*! It prints a character*/
 			LCD_nokia_send_char('8'); /*! It prints a character*/
 			delay(65000);
-
+			LCD_nokia_clear();/*! It clears the information printed in the LCD*/
+			delay(65000);
+			LCD_nokia_bitmap(&teolosico[0]);
+			delay(65000);
 		}
 	
 	return 0;

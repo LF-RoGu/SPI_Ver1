@@ -87,17 +87,17 @@ typedef struct
 	spi_lsb_or_msb_t spi_lsb_or_msb;
 	spi_channel_t spi_channel;
 	spi_master_t spi_master;
-	gpio_pin_control_register_t pin_config;
+	GPIO_pin_control_register_t pin_config;
 	uint8_t spi_baudrate;
 	uint32_t spi_frame_size;
 	spi_port_config_t spi_gpio_port;
 } spi_config_t;
 
-
+#if 0
 /*it enable the clock module of the SPI by modifying the MDIS bits*/
-static void SPI_enable(spi_channel_t);
+static void SPI_enable(spi_channel_t channel);
 /*It activate the clock gating*/
-static void SPI_clk(spi_channel_t);
+static void SPI_clk(spi_channel_t channel);
 /*It configure the SPI as a master or slave depending on the value of masterOrslave*/
 static void SPI_set_master(spi_channel_t channel, spi_master_t masterOrSlave);
 /*It activate the TX and RX FIFOs of the SPI depending on the value of enableOrdisable*/
@@ -112,6 +112,7 @@ static void SPI_clock_phase(spi_channel_t channel, spi_phase_t cpha);
 static void SPI_baud_rate(spi_channel_t channel, uint32_t baudRate);
 /*It selects if MSB or LSM bits is first transmitted*/
 static void SPI_msb_first(spi_channel_t channel, spi_lsb_or_msb_t msb);
+#endif
 /*It stars the SPI transmission by modifying the value of HALT bit*/
 void SPI_start_tranference(spi_channel_t channel);
 /*It stops the SPI transmission by modifying the value of HALT bit*/
